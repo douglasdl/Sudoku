@@ -1,0 +1,79 @@
+# import the necessary packages
+import numpy as np
+
+class Sudoku():
+    def __init__(self):
+        self.sudoku = []
+
+
+    def createGame(self):
+        self.sudoku = np.array([5, 3, 0, 0, 7, 0, 0, 0, 0,
+                                6, 0, 0, 1, 9, 5, 0, 0, 0,
+                                0, 9, 8, 0, 0, 0, 0, 6, 0,
+                                8, 0, 0, 0, 6, 0, 0, 0, 3,
+                                4, 0, 0, 8, 0, 3, 0, 0, 1,
+                                7, 0, 0, 0, 2, 0, 0, 0, 6,
+                                0, 6, 0, 0, 0, 0, 2, 8, 0,
+                                0, 0, 0, 4, 1, 9, 0, 0, 5,
+                                0, 0, 0, 0, 8, 0, 0, 7, 9]).reshape([9, 9])
+        return self.sudoku
+
+    def getLine(self, line):
+        return self.sudoku[line, :]
+
+    def getColumn(self, column, asLine = True):
+        if asLine:
+            return self.sudoku[:, column]
+        else:
+            return self.sudoku[:, column].reshape([9, 1])
+
+    def getSquare(self, size = 3, x = 0, y = 4):
+        x2 = x // size
+        y2 = y // size
+        return self.sudoku[x2 * size : (x2 + 1) * size, y2 * size : (y2 + 1) * size]
+
+    def isValid(self, x, y, input):
+        return input not in self.getLine(x) and input not in self.getColumn(y) and input not in self.getSquare(x=x, y=y)
+
+    def getAllValids(self):
+        pass     
+
+    def solveGame(self):
+        print("Game Solved")
+
+
+    def printGrids(self, symbol = "-"):
+        for line in range(0, 13):
+            for column in range(0, 13):
+                if line == 0 and column < 12:
+                    print(symbol),
+                elif line == 0 or column == 13:
+                    print(symbol)
+                elif line % 4 == 0 and column < 12:
+                    print(symbol),    
+                elif line == 13:
+                    print(symbol),    
+                else:
+                    if column == 0:
+                        print(symbol),
+                    elif column == 12:
+                        print(symbol)
+                    elif column % 4 == 0:
+                        print(symbol),    
+                    else:
+                        print(column),      
+        
+
+def main():
+    print("SUDOKU")
+    game = Sudoku()
+    #game.printGrids()
+    s = game.createGame()
+    l = game.getLine(3)
+    c = game.getColumn(0)
+    q = game.getSquare()
+    v = game.isValid(0, 0, 5)
+    print(v)
+
+if __name__ == '__main__':
+    main()
