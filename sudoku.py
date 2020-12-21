@@ -18,8 +18,10 @@ class Sudoku():
                                 0, 0, 0, 0, 8, 0, 0, 7, 9]).reshape([9, 9])
         return self.sudoku
 
+
     def getLine(self, line):
         return self.sudoku[line, :]
+
 
     def getColumn(self, column, asLine = True):
         if asLine:
@@ -27,20 +29,23 @@ class Sudoku():
         else:
             return self.sudoku[:, column].reshape([9, 1])
 
+
     def getSquare(self, size = 3, x = 0, y = 4):
         x2 = x // size
         y2 = y // size
         return self.sudoku[x2 * size : (x2 + 1) * size, y2 * size : (y2 + 1) * size]
 
+
     def isValid(self, x, y, input):
         return input not in self.getLine(x) and input not in self.getColumn(y) and input not in self.getSquare(x=x, y=y)
 
+
     def getAllValids(self, x, y):
-        validsNumbers = list()
+        validNumbers = list()
         for number in range(1, 10):  
             if self.isValid(x=x, y=y, input=number):
-                validsNumbers.append(number)
-        return validsNumbers        
+                validNumbers.append(number)
+        return validNumbers        
 
 
     def solveGame(self):
@@ -80,6 +85,7 @@ def main():
     #v = game.isValid(0, 0, 5)
     vn = game.getAllValids(1, 1)
     print(vn)
+
 
 if __name__ == '__main__':
     main()
