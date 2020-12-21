@@ -35,8 +35,13 @@ class Sudoku():
     def isValid(self, x, y, input):
         return input not in self.getLine(x) and input not in self.getColumn(y) and input not in self.getSquare(x=x, y=y)
 
-    def getAllValids(self):
-        pass     
+    def getAllValids(self, x, y):
+        validsNumbers = list()
+        for number in range(1, 10):  
+            if self.isValid(x=x, y=y, input=number):
+                validsNumbers.append(number)
+        return validsNumbers        
+
 
     def solveGame(self):
         print("Game Solved")
@@ -69,11 +74,12 @@ def main():
     game = Sudoku()
     #game.printGrids()
     s = game.createGame()
-    l = game.getLine(3)
-    c = game.getColumn(0)
-    q = game.getSquare()
-    v = game.isValid(0, 0, 5)
-    print(v)
+    #l = game.getLine(3)
+    #c = game.getColumn(0)
+    #q = game.getSquare()
+    #v = game.isValid(0, 0, 5)
+    vn = game.getAllValids(1, 1)
+    print(vn)
 
 if __name__ == '__main__':
     main()
