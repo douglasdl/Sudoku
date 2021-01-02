@@ -4,6 +4,7 @@ import numpy as np
 class Sudoku():
     def __init__(self):
         self.sudoku = []
+        self.solutions = list()
 
 
     def createGame(self):
@@ -47,9 +48,19 @@ class Sudoku():
                 validNumbers.append(number)
         return validNumbers        
 
-
     def solveGame(self):
-        print("Game Solved")
+        # ndenumerate function returns the index of an array element 
+        for (x, y), number in np.ndenumerate(self.sudoku):
+            # Get empty places
+            if number == 0:
+                # Solve empty places
+                for answer in self.getAllValids(x, y):
+                    self.sudoku[x, y] = answer
+                    self.solveGame()
+                    self.sudoku[x, y] = 0
+                    return
+                self.solutions.append(self.sudoku.copy())
+        print(self.sudoku)            
 
 
     def printGrids(self, symbol = "-"):
@@ -78,13 +89,18 @@ def main():
     print("SUDOKU")
     game = Sudoku()
     #game.printGrids()
-    s = game.createGame()
+    game.createGame()
     #l = game.getLine(3)
     #c = game.getColumn(0)
     #q = game.getSquare()
     #v = game.isValid(0, 0, 5)
-    vn = game.getAllValids(1, 1)
-    print(vn)
+    #vn = game.getAllValids(1, 1)
+    game.solveGame()
+    for solution in game.solutions:
+        print(solution)
+    
+
+    #print(l)
 
 
 if __name__ == '__main__':
